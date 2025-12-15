@@ -29,49 +29,49 @@ const fetchFromApi = async (endpoint, options = {}) => {
 // Movie-related API functions
 
 // Movies list with pagination
-export const getMovies = async (page = 1, limit = 10) => {
+export const getMovies = async (page = 1, limit = 12) => {
   return await fetchFromApi(`/movies?page=${page}&limit=${limit}`, {
     method: "GET",
   });
 };
 
 // Search movies matching query
-export const searchMoviesByQuery = async (q, page = 1, limit = 10) => {
+export const searchMoviesByQuery = async (q, page = 1, limit = 12) => {
   return await fetchFromApi(`/movies/search?q=${q}&page=${page}&limit=${limit}`, {
     method: "GET",
   });
 };
 
 // Search movies by title
-export const searchMoviesByTitle = async (title, page = 1, limit = 10) => {
+export const searchMoviesByTitle = async (title, page = 1, limit = 12) => {
   return await fetchFromApi(`/movies/search?title=${title}&page=${page}&limit=${limit}`, {
     method: "GET",
   });
 };
 
 // Search movies by genre
-export const getMoviesByGenre = async (genre, page = 1, limit = 10) => {
+export const getMoviesByGenre = async (genre, page = 1, limit = 12) => {
   return await fetchFromApi(`/movies/search?genre=${genre}&page=${page}&limit=${limit}`, {
     method: "GET",
   });
 };
 
 // Search movies by person (actor/director/etc.)
-export const getMoviesByPerson = async (personId, page = 1, limit = 10) => {
+export const getMoviesByPerson = async (personId, page = 1, limit = 12) => {
   return await fetchFromApi(`/movies/search?person=${personId}&page=${page}&limit=${limit}`, {
     method: "GET",
   });
 };
 
 // Top rated
-export const getTopRatedMovies = async (page = 1, limit = 10) => {
+export const getTopRatedMovies = async (page = 1, limit = 12) => {
   return await fetchFromApi(`/movies/top-rated?category=IMDB_TOP_50&page=${page}&limit=${limit}`, {
     method: "GET",
   });
 };
 
 // Most popular
-export const getMostPopularMovies = async (page = 1, limit = 10) => {
+export const getMostPopularMovies = async (page = 1, limit = 12) => {
     // console.log(page, limit);
   return await fetchFromApi(`/movies/most-popular?page=${page}&limit=${limit}`, {
     method: "GET",
@@ -86,7 +86,7 @@ export const getMovieDetail = async (id) => {
 };
 
 // Movie reviews
-export const getMovieReviews = async (movieId, page = 1, limit = 10) => {
+export const getMovieReviews = async (movieId, page = 1, limit = 12) => {
   return await fetchFromApi(`/movies/${movieId}/reviews?page=${page}&limit=${limit}`, {
     method: "GET",
   });
@@ -95,7 +95,7 @@ export const getMovieReviews = async (movieId, page = 1, limit = 10) => {
 // Person-related API functions
 
 // Actors/Directors list with pagination
-export const getPersons = async (page = 1, limit = 10) => {
+export const getPersons = async (page = 1, limit = 12) => {
   return await fetchFromApi(`/persons?page=${page}&limit=${limit}`, {
     method: "GET",
   });
