@@ -73,14 +73,14 @@ export const getMovieReviews = async (movieId, page = 1, limit = 10) => {
 
 // Person-related API functions
 
-// Danh sách diễn viên / nhân vật
+// Actors/Directors list with pagination
 export const getPersons = async (page = 1, limit = 10) => {
   return await fetchFromApi(`/persons?page=${page}&limit=${limit}`, {
     method: "GET",
   });
 };
 
-// Chi tiết diễn viên
+// Person detail by ID
 export const getPersonDetail = async (id) => {
   return await fetchFromApi(`/persons/${id}`, {
     method: "GET",

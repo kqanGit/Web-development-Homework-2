@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 
 const MovieCard = ({ movie, type = "home" }) => {
-  const { id, title, year, image, genre } = movie;
+  const { id, title, year, image, genres } = movie;
 
-  // --- TRƯỜNG HỢP 1: GIAO DIỆN HOME (Hover Art) ---
   if (type === "hot") {
     return (
       <Link
@@ -11,12 +10,20 @@ const MovieCard = ({ movie, type = "home" }) => {
         className="block relative group rounded-lg overflow-hidden shadow-lg cursor-pointer"
       >
         <div className="aspect-[2/3] max-w-xs relative">
-          <img
-            src={image}
-            alt={title}
-            // group-hover:scale-110 -> Zoom ảnh khi hover
-            className="w-full h-full object-cover"
-          />
+          <img src={image} alt={title} className="w-full h-full object-cover transition-opacity duration-500" />
+          <div>
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/50 to-transparent p-4">
+              <h3 className="text-white font-bold text-lg leading-tight mb-1">
+                {movie.title}
+              </h3>
+              <div className="flex justify-between items-center text-gray-300 text-sm">
+                <span>{year}</span>
+              </div>
+              <div>
+                <span className="text-gray-300 text-sm line-clamp-2">{genres.join(", ")}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </Link>
     );
@@ -27,18 +34,12 @@ const MovieCard = ({ movie, type = "home" }) => {
         to={`/movie/${movie.id}`}
         className="block relative group rounded-lg overflow-hidden shadow-lg cursor-pointer"
       >
-        {/* Container Ảnh: Có overflow-hidden để khi ảnh zoom không bị tràn ra ngoài */}
         <div className="aspect-[2/3] overflow-hidden relative">
           <img
             src={image}
             alt={title}
-            // group-hover:scale-110 -> Zoom ảnh khi hover
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
-
-          {/* Lớp phủ đen mờ (Overlay) + Thông tin */}
-          {/* translate-y-full: Mặc định thụt xuống dưới đáy (ẩn đi) */}
-          {/* group-hover:translate-y-0: Hover vào thì trượt lên */}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col justify-end p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
             <h3 className="text-white font-bold text-lg leading-tight mb-1">
               {movie.title}
@@ -55,8 +56,6 @@ const MovieCard = ({ movie, type = "home" }) => {
     );
   }
 
-  // --- TRƯỜNG HỢP 2: GIAO DIỆN SEARCH (Card cổ điển) ---
-  // (Ảnh riêng, Chữ riêng, luôn hiển thị để dễ tìm kiếm)
   return (
     <Link
       to={`/movie/${movie.id}`}
@@ -64,11 +63,10 @@ const MovieCard = ({ movie, type = "home" }) => {
     >
       <div className="relative aspect-[2/3] overflow-hidden">
         <img
-          src={posterUrl}
-          alt={movie.title}
+          src={image}
+          alt={title}
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
         />
-        {/* Badge điểm số ở góc ảnh */}
         <div className="absolute top-2 right-2 bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded">
           {movie.vote_average?.toFixed(1)}
         </div>
