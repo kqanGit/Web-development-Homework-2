@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
 import Home from "@/pages/Home";
+import SearchResult from "@/pages/SearchResult";
 
 const MovieDetail = () => <div>Movie Detail</div>;
-const SearchResult = () => <div>Search Result</div>;
 const Login = () => <div>Login</div>;
 const Profile = () => <div>Profile</div>;
 const Favorites = () => <div>Favorites</div>;
