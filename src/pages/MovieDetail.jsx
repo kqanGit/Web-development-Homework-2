@@ -23,10 +23,6 @@ const MovieDetail = () => {
     return <div className="text-center py-20 text-white">Loading...</div>;
   }
 
-  if (reviewsLoading) {
-    return <div className="text-center py-20 text-white">Loading reviews...</div>;
-  }
-
   console.log(reviews);
 
   console.log(data);
@@ -86,10 +82,60 @@ const MovieDetail = () => {
           )}
         </div>
       </div>
-      <div>
-        <h1 className="text-4xl font-bold m-4 text-black dark:text-white">
+      
+      {/* Reviews Section */}
+      <div className="px-10">
+        <h1 className="text-4xl font-bold mb-6 text-black dark:text-white">
           Reviews
         </h1>
+        {reviewsLoading ? (
+          <div className="text-black dark:text-white">Loading reviews...</div>
+        ) : reviewsError ? (
+          <div className="text-red-500">Error loading reviews</div>
+        ) : reviews && reviews.length > 0 ? (
+          <div className="space-y-6">
+            {reviews.map((review) => (
+              <div
+                key={review.id}
+                className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700"
+              >
+                {/* Header */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-xl font-bold text-black dark:text-white">
+                        {review.title}
+                      </h3>
+                      {review.warning_spoilers && (
+                        <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">
+                          SPOILER
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+                      <span className="font-semibold">{review.username}</span>
+                      <span>{new Date(review.date).toLocaleDateString()}</span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-yellow-500">★</span>
+                        <span className="font-bold text-black dark:text-white">
+                          {review.rate}/10
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div
+                  className="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-3 [&>p]:mb-2"
+                  dangerouslySetInnerHTML={{ __html: review.content }}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-gray-500 dark:text-gray-400">No reviews available</div>
+        )}
       </div>
 
       {/* Actor Section */}
