@@ -3,7 +3,7 @@ import { useFetch } from "@/hooks/useFetch";
 import { getMostPopularMovies } from "@/services/api";
 import MovieCard from "./MovieCard";
 
-const BannerSlider = ({ movies, type = "hot" }) => {
+const BannerSlider = ({ movies, type = "default" }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const {
     data,
