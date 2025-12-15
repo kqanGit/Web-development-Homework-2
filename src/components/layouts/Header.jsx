@@ -1,11 +1,27 @@
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Label } from "@/components/ui/label";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import SunIcon from "@/components/icons/SunIcon";
 import MoonIcon from "@/components/icons/MoonIcon";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
+  const handleOnLogin = () => {
+    navigate("/login");
+  };
+  const handleOnRegister = () => {
+    navigate("/register");
+  };
   return (
     <header className="bg-red-200 text-black shadow-md rounded-sm dark:bg-gray-800 dark:text-white">
       <div className="max-w-[1200px] mx-auto px-4 py-3 flex justify-between items-center">
@@ -23,7 +39,17 @@ const Header = () => {
               {theme === "dark" ? <MoonIcon /> : <SunIcon />}
             </Label>
           </div>
-          <div className="text-sm">Guest</div>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="px-3 py-2 bg-red-300 dark:bg-gray-700 rounded-md hover:bg-red-400 dark:hover:bg-gray-600 transition-colors">
+              Guest
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleOnLogin}>Login</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleOnRegister}>Register</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>
