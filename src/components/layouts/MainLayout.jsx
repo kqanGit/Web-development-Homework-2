@@ -9,7 +9,7 @@ const MainLayout = () => {
       <div className="w-full max-w-[1200px] flex flex-col gap-2 mx-auto min-h-screen flex flex-col">
         <Header />
         <NavBar />
-        <main className="flex-grow p-4">
+        <main className="flex-grow">
           <Outlet />
         </main>
         <Footer />
