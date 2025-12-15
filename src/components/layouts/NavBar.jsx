@@ -3,6 +3,14 @@ import { Button } from "@/components/ui/button";
 import HomeIcon from "@/components/icons/HomeIcon";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -20,7 +28,7 @@ const NavBar = () => {
       <div className="flex justify-between items-center gap-2 text-black dark:text-white">
         <HomeIcon />
 
-        <form className="flex items-center" onSubmit={handleSearch}>
+        <form className="flex gap-4 items-center" onSubmit={handleSearch}>
           <Input
             className="bg-white text-black rounded-sm dark:bg-gray-700 dark:text-white"
             placeholder="Search..."
