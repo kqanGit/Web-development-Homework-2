@@ -51,7 +51,7 @@ export const getTopRatedMovies = async (page = 1, limit = 10) => {
 
 // Most popular
 export const getMostPopularMovies = async (page = 1, limit = 10) => {
-    console.log(page, limit);
+    // console.log(page, limit);
   return await fetchFromApi(`/movies/most-popular?page=${page}&limit=${limit}`, {
     method: "GET",
   });

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const MovieCard = ({ movie, type = "home" }) => {
-  const { id, title, year, image, genres } = movie;
+  const { id, title, year, image, genres, rate } = movie;
 
   if (type === "hot") {
     return (
@@ -14,13 +14,13 @@ const MovieCard = ({ movie, type = "home" }) => {
           <div>
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/50 to-transparent p-4">
               <h3 className="text-white font-bold text-lg leading-tight mb-1">
-                {movie.title}
+                {title}
               </h3>
               <div className="flex justify-between items-center text-gray-300 text-sm">
-                <span>{year}</span>
+                <span>{`${year} - (${rate})`}</span>
               </div>
               <div>
-                <span className="text-gray-300 text-sm line-clamp-2">{genres.join(", ")}</span>
+                <span className="text-gray-300 text-sm">{genres.join(", ")}</span>
               </div>
             </div>
           </div>

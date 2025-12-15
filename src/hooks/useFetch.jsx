@@ -10,7 +10,10 @@ export function useFetch(fetcher, deps = []) {
 
     setLoading(true);
     fetcher()
-      .then((res) => mounted && setData(res.data))
+      .then((res) => {
+        const result = res?.data !== undefined ? res.data : res;
+        mounted && setData(result);
+      })
       .catch((err) => mounted && setError(err))
       .finally(() => mounted && setLoading(false));
 

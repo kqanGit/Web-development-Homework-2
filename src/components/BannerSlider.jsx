@@ -1,8 +1,17 @@
 import { useState } from "react";
+import { useFetch } from "@/hooks/useFetch";
+import { getMostPopularMovies } from "@/services/api";
 import MovieCard from "./MovieCard";
 
 const BannerSlider = ({ movies, type = "hot" }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const {
+    data,
+    loading,
+    error,
+  } = useFetch(() => getMostPopularMovies(1, 5));
+
+  movies = data;
 
   const handleOnPrev = () => {
     setCurrentIndex((prevIndex) =>
@@ -17,14 +26,20 @@ const BannerSlider = ({ movies, type = "hot" }) => {
   };
 
   return (
-    <div className="flex items-center justify-between">
-      {/* Prev */}
-      <button
-        onClick={handleOnPrev}
-        className="text-4xl font-bold dark:text-white"
-      >
-        {"<"}
-      </button>
+    <>
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>Error loading movies</div>
+      ) : (
+        <div className="flex items-center justify-between">
+          {/* Prev */}
+          <button
+            onClick={handleOnPrev}
+            className="text-4xl font-bold dark:text-white"
+          >
+            {"<"}
+          </button>
 
       {/* Slider */}
       <div className="relative mx-auto w-[300px] h-[450px]">
@@ -55,14 +70,16 @@ const BannerSlider = ({ movies, type = "hot" }) => {
         </div>
       </div>
 
-      {/* Next */}
-      <button
-        onClick={handleOnNext}
-        className="text-4xl font-bold dark:text-white"
-      >
-        {">"}
-      </button>
-    </div>
+          {/* Next */}
+          <button
+            onClick={handleOnNext}
+            className="text-4xl font-bold dark:text-white"
+          >
+            {">"}
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 
