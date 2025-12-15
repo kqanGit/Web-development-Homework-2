@@ -95,8 +95,8 @@ export const getMovieReviews = async (movieId, page = 1, limit = 12) => {
 // Person-related API functions
 
 // Actors/Directors list with pagination
-export const getPersons = async (page = 1, limit = 12) => {
-  return await fetchFromApi(`/persons?page=${page}&limit=${limit}`, {
+export const getPersons = async ({id}) => {
+  return await fetchFromApi(`/persons/${id}`, {
     method: "GET",
   });
 };

@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getMovieDetail } from "../services/api";
-import { useFetch } from "../hooks/useFetch";
-import MovieSlider from "../components/MovieSlider";
+import { getMovieDetail } from "@/services/api";
+import { useFetch } from "@/hooks/useFetch";
+import PersonCard from "@/components/PersonCard";
+import MovieSlider from "@/components/MovieSlider";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -77,10 +78,7 @@ const MovieDetail = () => {
             <div className="mb-6 grid grid-cols-6">
               {actors.map((actor) => {
                 return (
-                    <div key={actor.id} className="flex flex-col items-center mr-6 mb-4">
-                        <img src={actor.image} alt={actor.name} className="w-32 h-48 object-cover rounded-lg mb-2"/>
-                        <span className="font-bold text-black dark:text-white text-center">{actor.name}</span>
-                    </div>
+                    <PersonCard key={actor.id} actor={actor} />
                 );    
               })}
             </div>
