@@ -35,9 +35,30 @@ export const getMovies = async (page = 1, limit = 10) => {
   });
 };
 
-// Search movies
-export const searchMovies = async (q, page = 1, limit = 10) => {
+// Search movies matching query
+export const searchMoviesByQuery = async (q, page = 1, limit = 10) => {
   return await fetchFromApi(`/movies/search?q=${q}&page=${page}&limit=${limit}`, {
+    method: "GET",
+  });
+};
+
+// Search movies by title
+export const searchMoviesByTitle = async (title, page = 1, limit = 10) => {
+  return await fetchFromApi(`/movies/search?title=${title}&page=${page}&limit=${limit}`, {
+    method: "GET",
+  });
+};
+
+// Search movies by genre
+export const getMoviesByGenre = async (genre, page = 1, limit = 10) => {
+  return await fetchFromApi(`/movies/search?genre=${genre}&page=${page}&limit=${limit}`, {
+    method: "GET",
+  });
+};
+
+// Search movies by person (actor/director/etc.)
+export const getMoviesByPerson = async (personId, page = 1, limit = 10) => {
+  return await fetchFromApi(`/movies/search?person=${personId}&page=${page}&limit=${limit}`, {
     method: "GET",
   });
 };
