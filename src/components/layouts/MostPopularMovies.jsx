@@ -18,12 +18,13 @@ const MostPopularMovies = () => {
   });
 
 //   console.log(movies);
+  if (loading) {
+    return <></>
+  }
 
   return (
     <>
-      {loading ? (
-        <div>Loading...</div>
-      ) : error ? (
+     {error ? (
         <div>Error loading movies</div>
       ) : (
         <MovieSlider title="Most Popular" movies={movies} />

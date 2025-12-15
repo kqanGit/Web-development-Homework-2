@@ -17,13 +17,14 @@ const TopRatingMovies = () => {
     return [...p1.data, ...p2.data];
   });
 
-  console.log(movies);
+  // console.log(movies);
+  if (loading) {
+    return <></>;
+  }
 
   return (
     <>
-      {loading ? (
-        <div>Loading...</div>
-      ) : error ? (
+      {error ? (
         <div>Error loading movies</div>
       ) : (
         <MovieSlider title="Top Rating" movies={movies} />

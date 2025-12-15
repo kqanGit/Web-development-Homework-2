@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import { getMostPopularMovies } from "@/services/api";
-import MovieCard from "./MovieCard";
+import Loading from "@/components/layouts/Loading";
+import MovieCard from "@/components/MovieCard";
 
 const BannerSlider = ({ movies, type = "default" }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -25,11 +26,13 @@ const BannerSlider = ({ movies, type = "default" }) => {
     );
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
-      {loading ? (
-        <div>Loading...</div>
-      ) : error ? (
+      {error ? (
         <div>Error loading movies</div>
       ) : (
         <div className="flex items-center justify-between">
