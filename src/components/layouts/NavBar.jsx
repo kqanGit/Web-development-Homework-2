@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -26,7 +27,9 @@ const NavBar = () => {
   return (
     <nav className="bg-gray-200 p-2 rounded-sm dark:bg-gray-800">
       <div className="flex justify-between items-center gap-2 text-black dark:text-white">
-        <HomeIcon />
+        <Link to="/">
+          <HomeIcon className="w-8 h-8" />
+        </Link>
 
         <form className="flex gap-4 items-center" onSubmit={handleSearch}>
           <Input

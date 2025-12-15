@@ -39,7 +39,7 @@ const MovieDetail = () => {
   };
 
   return (
-    <div className="h-full bg-blue-100 dark:bg-gray-900 text-white py-8 px-4 space-y-6">
+    <div className="h-full bg-blue-100 dark:bg-gray-900 py-8 px-4 space-y-6">
       <div className="px-10 bg-blue-100 rounded dark:bg-gray-800 flex items-center pb-0 gap-8">
         <div className="hidden md:block w-64 h-96 flex-shrink-0 rounded-lg overflow-hidden shadow-2xl border-4 border-white/20">
           <img src={image} alt={title} className="w-full h-full object-cover" />
