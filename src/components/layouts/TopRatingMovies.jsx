@@ -26,7 +26,7 @@ const TopRatingMovies = () => {
       ) : error ? (
         <div>Error loading movies</div>
       ) : (
-        <MovieSlider title="Most Popular" movies={movies} />
+        <MovieSlider title="Top Rating" movies={movies} />
       )}
     </>
   );
