@@ -21,13 +21,13 @@ const TopRatingMovies = () => {
 
   return (
     <>
-      {/* {loading ? (
+      {loading ? (
         <div>Loading...</div>
       ) : error ? (
         <div>Error loading movies</div>
       ) : (
         <MovieSlider title="Most Popular" movies={movies} />
-      )} */}
+      )}
     </>
   );
 };
