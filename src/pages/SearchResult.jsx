@@ -1,7 +1,7 @@
 
 import { useSearchParams } from 'react-router-dom';
 import { useFetch } from "@/hooks/useFetch";
-import { searchMovies } from "@/services/api";
+import { searchMoviesByQuery } from "@/services/api";
 import MovieGrid from '@/components/MovieGrid';
 import MovieCard from "@/components/MovieCard";
 
@@ -12,12 +12,13 @@ const SearchResult = () => {
         data: movies,
         loading,
         error,
-    } = useFetch(() => searchMovies(query), [query]);
+    } = useFetch(() => searchMoviesByQuery(query), [query]);
+
 
     if (loading) {
         return <div>Loading...</div>;   
     }
-
+      console.log(movies);
     return (
         <>
             {error ? (

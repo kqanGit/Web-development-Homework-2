@@ -61,6 +61,7 @@ const MovieCard = ({ movie, type = "default" }) => {
           <img src={image} alt={title} className="w-full aspect-[2/3] mb-2" />
           <div className="flex flex-col items-center mb-6 text-center">
             <h3 className="font-bold text-lg ">{title}</h3>
+            <div>{year} - <span className="text-yellow-500">{rate ? `${rate}★` : ""}</span></div>
             <div className="italic">[{genres.join(", ")}]</div>
           </div>
         </div>
