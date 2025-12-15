@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getMovieDetail } from "@/services/api";
+import { getMovieDetail, getMovieReviews } from "@/services/api";
 import { useFetch } from "@/hooks/useFetch";
 import PersonCard from "@/components/PersonCard";
 import MovieSlider from "@/components/MovieSlider";
@@ -10,7 +10,11 @@ const MovieDetail = () => {
   const { id } = useParams();
 
   const { data, loading, error } = useFetch(() => getMovieDetail(id), [id]);
-
+  const {
+    data: reviews,
+    loading: reviewsLoading,
+    error: reviewsError,
+  } = useFetch(() => getMovieReviews(id), [id]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
@@ -18,6 +22,12 @@ const MovieDetail = () => {
   if (loading || !data) {
     return <div className="text-center py-20 text-white">Loading...</div>;
   }
+
+  if (reviewsLoading) {
+    return <div className="text-center py-20 text-white">Loading reviews...</div>;
+  }
+
+  console.log(reviews);
 
   console.log(data);
 
@@ -66,7 +76,10 @@ const MovieDetail = () => {
               <span className="font-bold text-black dark:text-white">
                 Director:{" "}
               </span>
-              <Link to={`/person/${directors?.[0]?.id}`} className="text-gray-400">
+              <Link
+                to={`/person/${directors?.[0]?.id}`}
+                className="text-gray-400"
+              >
                 {directors?.map((d) => d.name).join(", ")}
               </Link>
             </div>
@@ -74,16 +87,23 @@ const MovieDetail = () => {
         </div>
       </div>
       <div>
-        <h1 className="text-4xl font-bold m-4 text-black dark:text-white">Actors</h1>
+        <h1 className="text-4xl font-bold m-4 text-black dark:text-white">
+          Reviews
+        </h1>
+      </div>
+
+      {/* Actor Section */}
+      <div>
+        <h1 className="text-4xl font-bold m-4 text-black dark:text-white">
+          Actors
+        </h1>
         {actors && (
-            <div className="mb-6 grid grid-cols-6">
-              {actors.map((actor) => {
-                return (
-                    <PersonCard key={actor.id} actor={actor} />
-                );    
-              })}
-            </div>
-          )}
+          <div className="mb-6 grid grid-cols-6">
+            {actors.map((actor) => {
+              return <PersonCard key={actor.id} actor={actor} />;
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ const PersonCard = ({ actor }) => {
         <img
           src={actor.image}
           alt={actor.name}
-          className="w-32 h-48 object-cover rounded-lg mb-2"
+          className="w-32 h-48 object-cover rounded-lg mb-2 cursor-pointer"
           onClick={handleOnClick}
         />
       ) : (
