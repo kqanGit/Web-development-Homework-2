@@ -4,6 +4,7 @@ import { getMovieDetail } from "@/services/api";
 import { useFetch } from "@/hooks/useFetch";
 import PersonCard from "@/components/PersonCard";
 import MovieSlider from "@/components/MovieSlider";
+import { Link } from "react-router-dom";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -61,14 +62,14 @@ const MovieDetail = () => {
           />
 
           {directors && (
-            <p className="mb-6">
+            <div className="mb-6 flex items-center gap-2">
               <span className="font-bold text-black dark:text-white">
                 Director:{" "}
               </span>
-              <span className="text-gray-400">
+              <Link to={`/person/${directors?.[0]?.id}`} className="text-gray-400">
                 {directors?.map((d) => d.name).join(", ")}
-              </span>
-            </p>
+              </Link>
+            </div>
           )}
         </div>
       </div>
