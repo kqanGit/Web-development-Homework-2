@@ -46,8 +46,8 @@ const MovieCard = ({ movie, type = "home" }) => {
             alt={title}
             className="w-full h-full object-cover relative transition-transform duration-300"
           />
-          <div>
-            {title}
+          <div className='opacity-0 group-hover:opacity-100 group-hover:bg-black px-2 py-1 text-white'>
+            {title} ({year || (rate ? `${rate}★` : '')})
           </div>
         </div>
       </Link>
