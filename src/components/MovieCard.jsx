@@ -46,23 +46,23 @@ const MovieCard = ({ movie, type = "default" }) => {
             alt={title}
             className="w-full h-full object-cover relative transition-transform duration-300"
           />
-          <div className='opacity-0 group-hover:opacity-100 group-hover:bg-black px-2 py-1 text-white'>
-            {title} ({year || (rate ? `${rate}★` : '')})
+          <div className="opacity-0 group-hover:opacity-100 group-hover:bg-black px-2 py-1 text-white">
+            {title} ({year || (rate ? `${rate}★` : "")})
           </div>
         </div>
       </Link>
     );
   }
-  
-  if (type === 'grid-view') {
+
+  if (type === "grid-view") {
     return (
-      <Link
-        to={`/movie/${movie.id}`}
-      >
-        <div className="flex flex-col border">
-          <img src={image} alt={title} className="w-[250px] aspect-[2/3] mb-2" />
-          <h3>{title}</h3>
-          <div>{genres.join(", ")}</div>
+      <Link to={`/movie/${movie.id}`}>
+        <div className="flex flex-col gap-4 items-center border h-full">
+          <img src={image} alt={title} className="w-full aspect-[2/3] mb-2" />
+          <div className="flex flex-col items-center mb-6 text-center">
+            <h3 className="font-bold text-lg ">{title}</h3>
+            <div className="italic">[{genres.join(", ")}]</div>
+          </div>
         </div>
       </Link>
     );
