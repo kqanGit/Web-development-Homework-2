@@ -1,20 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMovieDetail, getMovieReviews } from "@/services/api";
 import { useFetch } from "@/hooks/useFetch";
 import PersonCard from "@/components/PersonCard";
 import MovieSlider from "@/components/MovieSlider";
 import { Link } from "react-router-dom";
+import AppPagination from "@/components/AppPagination";
 
 const MovieDetail = () => {
   const { id } = useParams();
+  const [reviewPage, setReviewPage] = useState(1);
 
   const { data, loading, error } = useFetch(() => getMovieDetail(id), [id]);
   const {
     data: reviews,
     loading: reviewsLoading,
     error: reviewsError,
-  } = useFetch(() => getMovieReviews(id), [id]);
+    pagination: reviewsPagination,
+  } = useFetch(() => getMovieReviews(id, reviewPage, 5), [id, reviewPage]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
@@ -29,6 +32,11 @@ const MovieDetail = () => {
 
   const { title, year, image, genres, ratings, plot_full, directors, actors } =
     data;
+
+  const handleReviewPageChange = (newPage) => {
+    setReviewPage(newPage);
+    // window.scrollTo({ top: 600, behavior: 'smooth' });
+  };
 
   return (
     <div className="h-full bg-blue-100 dark:bg-gray-900 text-white py-8 px-4 space-y-6">
@@ -132,6 +140,13 @@ const MovieDetail = () => {
                 />
               </div>
             ))}
+            {reviewsPagination && (
+              <AppPagination 
+                currentPage={reviewsPagination.current_page}
+                totalPages={reviewsPagination.total_pages}
+                onPageChange={handleReviewPageChange}
+              />
+            )}
           </div>
         ) : (
           <div className="text-gray-500 dark:text-gray-400">No reviews available</div>
