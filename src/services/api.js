@@ -44,7 +44,7 @@ export const searchMovies = async (q, page = 1, limit = 10) => {
 
 // Top rated
 export const getTopRatedMovies = async (page = 1, limit = 10) => {
-  return await fetchFromApi(`/movies/top-rated?page=${page}&limit=${limit}`, {
+  return await fetchFromApi(`/movies/top-rated?category=IMDB_TOP_50&page=${page}&limit=${limit}`, {
     method: "GET",
   });
 };
