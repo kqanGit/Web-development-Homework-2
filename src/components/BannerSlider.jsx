@@ -59,7 +59,7 @@ const BannerSlider = ({ movies, type = "hot" }) => {
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-20">
           {movies.map((_, index) => (
             <button
-              key={index}
+              key={`banner-slider-indicator-${index}`}
               onClick={() => setCurrentIndex(index)}
               className={`
                 h-1 rounded-full transition-all

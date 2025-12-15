@@ -17,9 +17,20 @@ const MostPopularMovies = () => {
     return [...p1.data, ...p2.data];
   });
 
+  console.log(movies);
 
-
-  return <>Most Popular</>;
+  return (
+    <>
+      Most Popular
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>Error loading movies</div>
+      ) : (
+        <MovieSlider title="Most Popular Movies" movies={movies} />
+      )}
+    </>
+  );
 };
 
 export default MostPopularMovies;
