@@ -25,7 +25,7 @@ const MovieCard = ({ movie, type = "default" }) => {
               </div>
               <div>
                 <span className="text-gray-300 text-sm">
-                  {genres.join(", ")}
+                  {genres ? genres.join(", ") : ""}
                 </span>
               </div>
             </div>
@@ -62,7 +62,7 @@ const MovieCard = ({ movie, type = "default" }) => {
           <div className="flex flex-col items-center mb-6 text-center">
             <h3 className="font-bold text-lg ">{title}</h3>
             <div>{year} - <span className="text-yellow-500">{rate ? `${rate}★` : ""}</span></div>
-            <div className="italic">[{genres.join(", ")}]</div>
+            <div className="italic">{`${genres ? genres.join(", ") : ""}`}</div>
           </div>
         </div>
       </Link>
