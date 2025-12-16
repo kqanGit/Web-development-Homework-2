@@ -45,7 +45,23 @@ const MovieDetail = () => {
   };
 
   const handleAddFavorite = async () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
 
+    try {
+      setFavoriteLoading(true);
+      setFavoriteMessage("");
+      await addFavoriteMovie(id);
+      setFavoriteMessage("Added to favorites successfully!");
+      setTimeout(() => setFavoriteMessage(""), 3000);
+    } catch (error) {
+      setFavoriteMessage("Failed to add to favorites");
+      setTimeout(() => setFavoriteMessage(""), 3000);
+    } finally {
+      setFavoriteLoading(false);
+    }
   };
 
   return (

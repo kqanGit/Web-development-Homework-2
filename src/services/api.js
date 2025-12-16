@@ -5,11 +5,14 @@ const APP_TOKEN =
 
 const fetchFromApi = async (endpoint, options = {}) => {
   try {
+    const authToken = localStorage.getItem('auth_token');
+    
     const response = await fetch(`${BASE_URL}${endpoint}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
         "x-app-token": `${APP_TOKEN}`,
+        ...(authToken && { Authorization: `Bearer ${authToken}` }),
         ...options.headers,
       },
     });
