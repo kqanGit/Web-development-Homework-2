@@ -31,7 +31,27 @@ const NavBar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
-      navigate(`/search?query=${keyword}`);
+      let searchUrl = "/search?";
+      
+      switch (searchType) {
+        case "omni":
+          searchUrl += `query=${encodeURIComponent(keyword)}`;
+          break;
+        case "title":
+          searchUrl += `title=${encodeURIComponent(keyword)}`;
+          break;
+        case "person":
+          searchUrl += `person=${encodeURIComponent(keyword)}`;
+          break;
+        case "genre":
+          searchUrl += `genre=${encodeURIComponent(keyword)}`;
+          break;
+        default:
+          searchUrl += `query=${encodeURIComponent(keyword)}`;
+      }
+      
+      navigate(searchUrl);
+      setKeyword(""); // Clear search after submit
     }
   };
 
