@@ -1,8 +1,27 @@
 
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+
+const registerSchema = z.object({
+  username: z.string()
+    .min(1, "Username is required")
+    .min(3, "Username must be at least 3 characters"),
+  email: z.string()
+    .min(1, "Email is required")
+    .email("Invalid email address"),
+  password: z.string()
+    .min(1, "Password is required")
+    .min(6, "Password must be at least 6 characters"),
+  phone: z.string()
+    .min(1, "Phone number is required")
+    .regex(/^[0-9]{10,11}$/, "Phone must be 10-11 digits"),
+  dob: z.string()
+    .min(1, "Date of birth is required"),
+});
 
 const Register = () => {
   const { register: registerUser } = useAuth();
@@ -13,7 +32,10 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-  } = useForm();
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(registerSchema),
+  });
 
   const onSubmit = async (data) => {
     try {
@@ -29,7 +51,6 @@ const Register = () => {
       }
     } catch (err) {
       setError("An error occurred. Please try again!");
-      console.error("Register error:", err);
     } finally {
       setLoading(false);
     }
@@ -73,6 +94,11 @@ const Register = () => {
               placeholder="Enter your username"
               disabled={loading}
             />
+            {errors.username && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.username.message}
+              </p>
+            )}
           </div>
 
           {/* Email Field */}
@@ -91,6 +117,11 @@ const Register = () => {
               placeholder="user@example.com"
               disabled={loading}
             />
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {/* Password Field */}
@@ -109,6 +140,11 @@ const Register = () => {
               placeholder="Enter your password"
               disabled={loading}
             />
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Phone Field */}
@@ -127,6 +163,11 @@ const Register = () => {
               placeholder="0123456789"
               disabled={loading}
             />
+            {errors.phone && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.phone.message}
+              </p>
+            )}
           </div>
 
           {/* Date of Birth Field */}
@@ -144,6 +185,11 @@ const Register = () => {
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
               disabled={loading}
             />
+            {errors.dob && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.dob.message}
+              </p>
+            )}
           </div>
 
           {/* Submit Button */}
