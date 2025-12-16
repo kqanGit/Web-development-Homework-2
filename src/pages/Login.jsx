@@ -1,8 +1,19 @@
 
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+
+const loginSchema = z.object({
+  username: z.string()
+    .min(1, "Username is required")
+    .min(3, "Username must be at least 3 characters"),
+  password: z.string()
+    .min(1, "Password is required")
+    .min(6, "Password must be at least 6 characters"),
+});
 
 const Login = () => {
   const { login } = useAuth();
@@ -13,7 +24,10 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-  } = useForm();
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+  });
 
   const onSubmit = async (data) => {
     try {
@@ -76,6 +90,11 @@ const Login = () => {
               placeholder="Enter your username"
               disabled={loading}
             />
+            {errors.username && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.username.message}
+              </p>
+            )}
           </div>
 
           {/* Password Field */}
@@ -94,6 +113,11 @@ const Login = () => {
               placeholder="Enter your password"
               disabled={loading}
             />
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Submit Button */}
