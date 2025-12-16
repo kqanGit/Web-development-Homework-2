@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getMovieDetail, getMovieReviews } from "@/services/api";
+import { useParams, useNavigate } from "react-router-dom";
+import { getMovieDetail, getMovieReviews, addFavoriteMovie } from "@/services/api";
 import { useFetch } from "@/hooks/useFetch";
+import { useAuth } from "@/contexts/AuthContext";
 import PersonCard from "@/components/PersonCard";
 import MovieSlider from "@/components/MovieSlider";
 import { Link } from "react-router-dom";
 import AppPagination from "@/components/AppPagination";
+import { Button } from "@/components/ui/button";
 
 const MovieDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [reviewPage, setReviewPage] = useState(1);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+  const [favoriteMessage, setFavoriteMessage] = useState("");
 
   const { data, loading, error } = useFetch(() => getMovieDetail(id), [id]);
   const {
@@ -36,6 +42,10 @@ const MovieDetail = () => {
   const handleReviewPageChange = (newPage) => {
     setReviewPage(newPage);
     // window.scrollTo({ top: 600, behavior: 'smooth' });
+  };
+
+  const handleAddFavorite = async () => {
+
   };
 
   return (
@@ -65,6 +75,23 @@ const MovieDetail = () => {
               </span>
             ))}
           </div>
+          
+          {/* Add to Favorites Button */}
+          <div className="mb-6">
+            <Button 
+              onClick={handleAddFavorite}
+              disabled={favoriteLoading}
+              className="bg-red-500 hover:bg-red-600 text-white"
+            >
+              {favoriteLoading ? "Adding..." : "Add to Favorites"}
+            </Button>
+            {favoriteMessage && (
+              <p className="mt-2 text-sm font-semibold text-green-600 dark:text-green-400">
+                {favoriteMessage}
+              </p>
+            )}
+          </div>
+
           <h3 className="text-xl font-semibold mb-2 dark:text-white">
             Description
           </h3>
