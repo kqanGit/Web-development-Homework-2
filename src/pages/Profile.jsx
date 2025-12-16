@@ -149,9 +149,14 @@ const Profile = () => {
               </span>
             </div>
           </div>
-          <div className="mt-8">
+          <div className="mt-8 flex gap-4">
             <Link to="/edit-profile">
               <Button variant="outline">Edit Profile</Button>
+            </Link>
+            <Link to="/favorites">
+              <Button variant="outline" className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30">
+                Favorite Movies
+              </Button>
             </Link>
           </div>
         </div>
