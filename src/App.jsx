@@ -6,8 +6,7 @@ import MovieDetail from "@/pages/MovieDetail";
 import PersonDetail from "@/pages/PersonDetail";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
-
-const Profile = () => <div>Profile</div>;
+import Profile from "@/pages/Profile";
 const Favorites = () => <div>Favorites</div>;
 
 function App() {
