@@ -14,14 +14,22 @@ const fetchFromApi = async (endpoint, options = {}) => {
       },
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      throw new Error(`Error: ${response.statusText}`);
+      throw {
+        status: response.status,
+        statusText: response.statusText,
+        message: data.message || response.statusText,
+      };
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
-    console.error("API Call Failed:", error);
+
+    if (error.status !== 401 && error.status !== 403) {
+      console.error("API Call Failed:", error);
+    }
     throw error;
   }
 };

@@ -1,16 +1,38 @@
 
 import { useForm } from "react-hook-form";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Register = () => {
+  const { register: registerUser } = useAuth();
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form data:", data);
-    // TODO: Handle register logic
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      setError("");
+      
+      const result = await registerUser(data);
+      
+      if (result.success) {
+        navigate("/login");
+      } else {
+        setError(result.message || "Registration failed!");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again!");
+      console.error("Register error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -26,6 +48,13 @@ const Register = () => {
           </p>
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+          </div>
+        )}
+
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* Username Field */}
@@ -39,21 +68,11 @@ const Register = () => {
             <input
               id="username"
               type="text"
-              {...register("username", {
-                required: "Username is required",
-                minLength: {
-                  value: 3,
-                  message: "Username must be at least 3 characters",
-                },
-              })}
+              {...register("username")}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
               placeholder="Enter your username"
+              disabled={loading}
             />
-            {errors.username && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                {errors.username.message}
-              </p>
-            )}
           </div>
 
           {/* Email Field */}
@@ -67,21 +86,11 @@ const Register = () => {
             <input
               id="email"
               type="email"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address",
-                },
-              })}
+              {...register("email")}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
               placeholder="user@example.com"
+              disabled={loading}
             />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                {errors.email.message}
-              </p>
-            )}
           </div>
 
           {/* Password Field */}
@@ -95,21 +104,11 @@ const Register = () => {
             <input
               id="password"
               type="password"
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters",
-                },
-              })}
+              {...register("password")}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
               placeholder="Enter your password"
+              disabled={loading}
             />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                {errors.password.message}
-              </p>
-            )}
           </div>
 
           {/* Phone Field */}
@@ -123,21 +122,11 @@ const Register = () => {
             <input
               id="phone"
               type="tel"
-              {...register("phone", {
-                required: "Phone number is required",
-                pattern: {
-                  value: /^[0-9]{10,11}$/,
-                  message: "Phone must be 10-11 digits",
-                },
-              })}
+              {...register("phone")}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
               placeholder="0123456789"
+              disabled={loading}
             />
-            {errors.phone && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                {errors.phone.message}
-              </p>
-            )}
           </div>
 
           {/* Date of Birth Field */}
@@ -151,24 +140,19 @@ const Register = () => {
             <input
               id="dob"
               type="date"
-              {...register("dob", {
-                required: "Date of birth is required",
-              })}
+              {...register("dob")}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
+              disabled={loading}
             />
-            {errors.dob && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                {errors.dob.message}
-              </p>
-            )}
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-3 px-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors duration-200 focus:ring-4 focus:ring-purple-300 dark:focus:ring-purple-800"
+            disabled={loading}
+            className="w-full py-3 px-4 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-400 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors duration-200 focus:ring-4 focus:ring-purple-300 dark:focus:ring-purple-800"
           >
-            Sign Up
+            {loading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
 
