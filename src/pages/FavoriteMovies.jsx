@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getFavoriteMovies, removeFavoriteMovie } from "@/services/api";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import AppPagination from "@/components/AppPagination";
 
 const FavoriteMovies = () => {
   const { user } = useAuth();
@@ -10,7 +11,9 @@ const FavoriteMovies = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [removingId, setRemovingId] = useState(null);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const itemsPerPage = 8; 
   useEffect(() => {
     if (!user) {
       navigate("/login");
@@ -49,6 +52,17 @@ const FavoriteMovies = () => {
     }
   };
 
+  // Pagination calculations
+  const totalPages = Math.ceil(movies.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentMovies = movies.slice(startIndex, endIndex);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
@@ -77,13 +91,15 @@ const FavoriteMovies = () => {
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             {movies.length} {movies.length === 1 ? 'movie' : 'movies'} in your favorites
+            {totalPages > 1 && ` (Page ${currentPage} of ${totalPages})`}
           </p>
         </div>
 
         {/* Movies Grid */}
         {movies.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {movies.map((movie) => (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {currentMovies.map((movie) => (
               <div key={movie.id} className="relative group">
                 <Link
                   to={`/movie/${movie.id}`}
@@ -108,23 +124,21 @@ const FavoriteMovies = () => {
                 <button
                   onClick={(e) => handleRemove(movie.id, e)}
                   disabled={removingId === movie.id}
-                  className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-2 shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed z-10"
-                  title="Remove from favorites"
+                  className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded px-2 py-1 text-xs font-semibold shadow transition-colors disabled:opacity-50 z-10"
                 >
-                  {removingId === movie.id ? (
-                    <svg className="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                  ) : (
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  )}
+                  {removingId === movie.id ? "..." : "Remove"}
                 </button>
               </div>
             ))}
-          </div>
+            </div>
+            
+            {/* Pagination */}
+            <AppPagination 
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </>
         ) : (
           <div className="text-center py-20">
             <p className="text-xl text-gray-600 dark:text-gray-400">
