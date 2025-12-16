@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { getUserProfile } from "@/services/api";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -35,7 +36,9 @@ const Profile = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Loading...</div>
+        <div className="text-xl text-gray-600 dark:text-gray-400">
+          Loading...
+        </div>
       </div>
     );
   }
@@ -145,6 +148,11 @@ const Profile = () => {
                 {new Date(profile.updated_at).toLocaleString()}
               </span>
             </div>
+          </div>
+          <div className="mt-8">
+            <Link to="/edit-profile">
+              <Button variant="outline">Edit Profile</Button>
+            </Link>
           </div>
         </div>
       </div>

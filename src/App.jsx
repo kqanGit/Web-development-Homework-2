@@ -7,6 +7,7 @@ import PersonDetail from "@/pages/PersonDetail";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Profile from "@/pages/Profile";
+import EditProfile from "@/pages/EditProfile";
 const Favorites = () => <div>Favorites</div>;
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="person/:id" element={<PersonDetail />} />
           <Route path="search" element={<SearchResult />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="edit-profile" element={<EditProfile />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="*" element={<div>404 - Page not found</div>} />
         </Route>

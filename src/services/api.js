@@ -150,7 +150,7 @@ export const getUserProfile = async () => {
 
 export const updateUserProfile = async (data) => {
   return await fetchFromApi(`/users/profile`, {
-    method: "PUT",
+    method: "PATCH",
     body: JSON.stringify(data),
   });
 };
