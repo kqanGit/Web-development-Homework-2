@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import HomeIcon from "@/components/icons/HomeIcon";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import {
   DropdownMenu,
@@ -15,7 +15,10 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [keyword, setKeyword] = useState("");
+
+  const shouldShowSearch = !location.pathname.startsWith('/profile');
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -31,20 +34,22 @@ const NavBar = () => {
           <HomeIcon className="w-8 h-8" />
         </Link>
 
-        <form className="flex gap-4 items-center" onSubmit={handleSearch}>
-          <Input
-            className="bg-white text-black rounded-sm dark:bg-gray-700 dark:text-white"
-            placeholder="Search..."
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-          />
-          <Button
-            className="ml-2 rounded-sm dark:bg-gray-700 dark:text-white"
-            type="submit"
-          >
-            Search
-          </Button>
-        </form>
+        {shouldShowSearch && (
+          <form className="flex gap-4 items-center" onSubmit={handleSearch}>
+            <Input
+              className="bg-white text-black rounded-sm dark:bg-gray-700 dark:text-white"
+              placeholder="Search..."
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+            <Button
+              className="ml-2 rounded-sm dark:bg-gray-700 dark:text-white"
+              type="submit"
+            >
+              Search
+            </Button>
+          </form>
+        )}
       </div>
     </nav>
   );
